@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="64" width="64" version="1.1"  viewBox="0 0 64 64">
+ <title>Encrypted File History Disk icon</title>
+ <g transform="translate(0 -988.4)">
+  <circle stroke-linejoin="round" cx="32" stroke="#ffd200" cy="1020" r="26" stroke-width="7.993" fill="none"/>
+  <circle stroke-linejoin="round" fill-opacity="0" cx="32" stroke="#afafaf" cy="1020" r="10.94" stroke-width="12.11"/>
+  <path d="m36.59 1025 20.78 13.3c2.356 1.507 4.364 3.657 3.946 6.627-0.4697 3.339-3.476 5.686-6.705 5.232-2.22-0.3121-3.556-2.081-4.698-3.903z" fill="#646464"/>
+ </g>
+</svg>
