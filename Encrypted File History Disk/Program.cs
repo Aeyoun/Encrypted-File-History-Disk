@@ -161,7 +161,11 @@ namespace EncryptedFileHistoryDiskUtility
         public static void RegisterMountTask(String volPath, String volLetter, String volPassword)
         {
             PowerShell ps = PowerShell.Create();
-            
+
+            /// New-ScheduledTask cmdlets not properly installed for majority of Windows Insiders, reinstall them.
+            ps.AddScript(@"mofcomp ([Environment]::GetFolderPath(""System"") + '\wbem\SchedProv.mof')");
+            ps.Invoke();
+
             /// Commands to run when triggered.
             /// Check if partition is mounted, if not check if the disk is available and mount it
             ps.AddScript(String.Format("$ss = ConvertTo-SecureString '{0}' -AsPlainText -Force |ConvertFrom-SecureString",
