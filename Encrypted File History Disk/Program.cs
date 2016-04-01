@@ -79,7 +79,13 @@ namespace EncryptedFileHistoryDiskUtility
             ShellHWServiceController(false);
 
             PowerShell ps = PowerShell.Create();
-            
+
+            if (File.Exists(volPath)) {
+                ps.AddScript(String.Format("Dismount-VHD -Path '{0}'; Remove-Item -Path '{0}' -Force",
+                                           volPath));
+                ps.Invoke();
+            }
+
             ps.AddScript(String.Format("New-VHD -Fixed -Path '{0}' -SizeBytes {1} |Mount-VHD -Passthru |"
                                       +"Initialize-Disk -Passthru -PartitionStyle GPT |"
                                       +"New-Partition -DriveLetter '{2}' -UseMaximumSize |"
