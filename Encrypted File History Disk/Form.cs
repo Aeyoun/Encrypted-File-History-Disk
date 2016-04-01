@@ -146,7 +146,7 @@ namespace EncryptedFileHistoryDiskUtility
                     pathLabel.Text = String.Format("\\\\{0}", test2.Host);
                 }
                 else {
-                    pathLabel.Text = System.IO.Path.GetPathRoot(saveDialog.FileName)
+                    pathLabel.Text = System.IO.Path.GetPathRoot(saveDialog.FileName).Substring(0, 2);
                 }
                 createVhdButton_Enabled_State();
         }   }
