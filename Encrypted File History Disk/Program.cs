@@ -179,6 +179,14 @@ namespace EncryptedFileHistoryDiskUtility
                                        volLetter));
             ps.AddScript(@"$taskuser = ([environment]::UserDomainName + '\' + [environment]::UserName)");
 
+            /// Register a simple on log on task to quickly make the disk available
+            ps.AddScript(@"$ltact = New-ScheduledTaskAction –Execute 'powershell.exe' -Argument ""-NoLogo -WindowStyle Hidden -NonInteractive -Command """"${taskcmdarg}""""""");
+            ps.AddScript(@"$lttrg = New-ScheduledTaskTrigger -AtLogOn -User $taskuser");
+            ps.AddScript(@"$ltusr = New-ScheduledTaskPrincipal -UserId $taskuser -RunLevel Highest");
+            ps.AddScript(@"if (Get-ScheduledTask -TaskPath '\' |Where-Object { $_.TaskName -eq ($taskname + ' at logon') }) {Unregister-ScheduledTask -TaskName ($taskname + ' at logon') -TaskPath '\' -Confirm:$false }");
+            ps.AddScript(@"Register-ScheduledTask -TaskName ($taskname + ' at logon') -Action $ltact -Trigger $lttrg -Principal $ltusr");
+            ps.Invoke();
+
             /// Register a task that runs at the most once per 45-minute but only when user has been idle for more than 15 minutes
             ps.AddScript(@"$schsrv = New-Object -ComObject('Schedule.Service'); $schsrv.Connect()");
             ps.AddScript(@"$taskdef = $schsrv.NewTask(0); $taskset = $taskdef.Settings");
